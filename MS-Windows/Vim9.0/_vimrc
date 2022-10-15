@@ -1,0 +1,62 @@
+syntax on
+
+" set shell=powershell
+
+filetype off
+set encoding=utf-8
+set shellslash
+set rtp+=~/vimfiles/bundle/Vundle.vim
+call vundle#begin('~/vimfiles/bundle')
+	Plugin 'VundleVim/Vundle.vim'
+	Plugin 'ctrlpvim/ctrlp.vim'
+	Plugin 'jiangmiao/auto-pairs'
+	Plugin 'lervag/vimtex'
+	Plugin 'sainnhe/gruvbox-material'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'tpope/vim-commentary'
+	Plugin 'vim-airline/vim-airline'
+call vundle#end()
+filetype plugin indent on
+
+set backspace=indent,eol,start
+set ignorecase
+set incsearch
+set nobk
+set nocp
+set nosmd
+set noswapfile
+set nowb
+set nowrap
+set nu
+set rnu
+set scs
+set so=5
+set sts=4 sw=4 ts=4
+
+autocmd InsertEnter * set nornu
+autocmd InsertLeave * set rnu
+
+autocmd WinEnter * set rnu
+autocmd WinLeave * set nornu
+
+autocmd WinEnter * set colorcolumn=81
+autocmd WinLeave * set colorcolumn=0
+
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+set guifont=Hack:h11
+
+set termguicolors
+colorscheme gruvbox-material
+set background=dark
+let g:gruvbox_transparent_bg=1
+highlight Normal guibg=NONE ctermbg=NONE
+highlight EndOfBuffer guibg=NONE ctermbg=NONE
+highlight Terminal guibg=NONE ctermbg=NONE
+
+let g:ctrlp_map = '<c-p>'
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#enabled = 1
