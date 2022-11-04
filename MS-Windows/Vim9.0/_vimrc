@@ -1,67 +1,49 @@
-syntax on
-set nocp
+set nocompatible
 
-set shell=powershell
-
-filetype off
-set encoding=utf-8
-set shellslash
-set rtp+=~/vimfiles/bundle/Vundle.vim
-call vundle#begin('~/vimfiles/bundle')
-	Plugin 'VundleVim/Vundle.vim'
-
-	Plugin 'ctrlpvim/ctrlp.vim'
-	Plugin 'jiangmiao/auto-pairs'
-	Plugin 'sainnhe/gruvbox-material'
-	Plugin 'tpope/vim-commentary'
-	Plugin 'vim-airline/vim-airline'
-call vundle#end()
+syntax enable
 filetype plugin indent on
 
 set backspace=indent,eol,start
-set ignorecase
-set incsearch
-set nobk
-set nosmd
-set noswapfile
-set nowb
-set nowrap
-set nu
-set rnu
-set scs
-set signcolumn=auto
-set so=5
-set sts=4 sw=4 ts=4
-set updatetime=100
+set expandtab ts=4 sw=4
+set ignorecase incsearch
+set mouse=a
+set noswapfile undofile
+set scrolloff=5
+set wildmenu
 
-autocmd InsertEnter * set nornu
-autocmd InsertLeave * set rnu
-
-autocmd WinEnter * set rnu
-autocmd WinLeave * set nornu
-
-autocmd WinEnter * set colorcolumn=81
-autocmd WinLeave * set colorcolumn=0
-
-nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
-set guifont=Hack:h11
-
-set guioptions-=m
-set guioptions-=T
-set guioptions-=r
-set guioptions-=L
-
-set termguicolors
-colorscheme gruvbox-material
-set background=dark
-highlight Normal guibg=NONE ctermbg=NONE
-highlight EndOfBuffer guibg=NONE ctermbg=NONE
-highlight Terminal guibg=NONE ctermbg=NONE
+call plug#begin()
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'lervag/vimtex'
+    Plug 'mbbill/undotree'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
+call plug#end()
 
 let g:ctrlp_map = '<c-p>'
+let g:vimtex_view_general_viewer = 'texworks.exe'
+let target_path = expand('~/.undodir')
+if !isdirectory(target_path)
+	call mkdir(target_path, "p", 0700)
+endif
+let &undodir=target_path
 
-" let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#enabled = 1
+set termguicolors
+colorscheme habamax
+highlight EndOfBuffer guibg=NONE ctermbg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
+highlight Terminal guibg=NONE ctermbg=NONE
+highlight ModeMsg ctermbg=NONE ctermfg=107 guibg=NONE guifg=#95B47B
+highlight VertSplit guibg=NONE ctermbg=NONE
+let g:netrw_banner=0
+
+nnoremap <silent>   <C-n> :set nonu! nornu!<CR>
+nnoremap <silent>   <tab> :bnext<CR>
+nnoremap <silent> <s-tab> :bprevious<CR>
+autocmd InsertEnter * if &number | set nornu | endif
+autocmd InsertLeave * if &number | set rnu | endif
+autocmd WinEnter * if &number | set rnu | endif
+autocmd WinLeave * if &number | set nornu | endif
+autocmd WinEnter * if &colorcolumn==0 | set colorcolumn=81 | endif
+autocmd WinLeave * if &colorcolumn==81 | set colorcolumn=0 | endif
